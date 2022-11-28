@@ -19,8 +19,7 @@ cursor: pointer;
 
 export const Header = styled.header`
     display: flex;
-    justify-content: start;
-    align-items: center;
+    justify-content: space-around;
     top: 0;
     left: 0;
     position: sticky;
@@ -35,9 +34,33 @@ export const Header = styled.header`
     padding-bottom:${p => p.theme.space[3]}px;
     border-radius: ${p => p.theme.space[2]}px;
   > nav {
-    display: inline-flex;
-    justify-content: center;
-    align-items: baseline;
-    gap: 10px;      
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;  
+    width: 100%;
+  }
+`;
+
+export const Container = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 70%;
+  margin-left: auto;
+  @media screen and (min-width: 768px) {
+      width: 50%;
+    }
+`;
+
+export const LogoutBtn = styled.button`
+color: ${p => p.theme.text.secondary};
+background-color: transparent;
+border: none;
+text-decoration:none;
+font-size: ${p=>p.theme.fontSizes.m};
+cursor: pointer;    
+    :hover:not(.active),
+    :focus:not(.active) {
+    transform: scale(1.25);
+    font-weight: 700;
   }
 `;
