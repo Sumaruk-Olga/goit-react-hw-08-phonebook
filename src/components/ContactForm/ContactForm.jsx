@@ -1,68 +1,59 @@
-import { useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { Form, Button, Input } from "./ContactForm.styled";
+import { Formik, ErrorMessage } from "formik";
+import * as yup from 'yup';
+import {  useDispatch, useSelector } from "react-redux";
+import { StyledForm, Button, Input } from "./ContactForm.styled";
 import { selectContacts } from 'redux/selectors';
 import { addContact } from 'redux/operations';
 
+const phoneRegExp =/^[+]?3?[\s]?8?[\s]?\(?0\d{2}?\)?[\s]?\d{3}[\s|-]?\d{2}[\s|-]?\d{2}$/;
+
+const schema = yup.object().shape({
+  name: yup.string().required(),
+  number: yup.string().required().matches(phoneRegExp, 'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +').min(7, "too short").max(20, "too long"),
+  });
+
+const initialValues = {
+  name: '',
+  number: '',
+};
 
 export function ContactForm() {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts); 
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
 
-  const handleChange = (e) => {
-    e.target.name === 'name' ?
-      setName(e.currentTarget.value) :
-      setNumber(e.currentTarget.value);
-    }
-
-  const reset = () => {
-    setName('');
-    setNumber('');
-    };
-
-    const isNamePresent = (name) => {
+  const isNamePresent = (name) => {
       const normalizedName = name.toLowerCase();
       return contacts.find(item => item.name.toLowerCase() === normalizedName);
-    }
+  }
     
-  const handleSubmit = (e) => {
-      e.preventDefault();
+  const handleSubmit = ({name, number}, { resetForm }) => {
       const isName = isNamePresent(name);
       if (!isName) {
         dispatch(addContact({ name, phone:number }));
-        reset();
+        resetForm();
       } else {
         alert(`${name} is already in contacts`);
       }    
   }
   
-  return <Form autoComplete="off"
-   onSubmit={handleSubmit} 
-   >
-          <label>Name
-            <Input
-              type="text"
-              name="name"
-              value={name}
-              onChange={handleChange}
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-              required
-            />
-          </label>
-          <label>Number
-            <Input
-              type="tel"
-              name="number"
-              value={number}
-              onChange={handleChange}
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              required
-            />
-          </label>
-          <Button type='submit'>add</Button>
-      </Form>
+  return <>
+  <Formik
+    initialValues={initialValues}
+    onSubmit={handleSubmit}
+    validationSchema={schema}
+        >          
+    <StyledForm autoComplete="off">
+      <label htmlFor="name">Name
+        <Input type="text" name="name" />
+        <ErrorMessage name="name" component="div" />
+      </label>
+      <label htmlFor="number">Number
+        <Input type="tel" name="number"  />
+        <ErrorMessage name="number" component="div" />
+      </label>
+      <Button type='submit'>add</Button>
+    </StyledForm>
+  </Formik>
+</>
 }
+
