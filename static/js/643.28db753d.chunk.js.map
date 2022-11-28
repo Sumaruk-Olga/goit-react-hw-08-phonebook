@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/643.28db753d.chunk.js","mappings":"0KAOC,UALgB,WACb,OAAO,SAAC,IAAD,sBAGT,C","sources":["pages/Register/Register.jsx"],"sourcesContent":["import { Page } from \"components/common/common.styled\";\n\nconst Register = () => {\n    return <Page>        \n        Register\n     </Page>\n };\n export default Register;"],"names":[],"sourceRoot":""}
