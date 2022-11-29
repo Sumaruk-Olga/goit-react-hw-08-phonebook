@@ -1,8 +1,9 @@
 import { Container } from "components/App/App.styled";
 import { Input, Label, Page, StyledForm } from "components/common/common.styled";
 import { Formik, ErrorMessage } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "redux/operations";
+import { selectIsAuthError } from "redux/selectors";
 import * as yup from 'yup';
 
 
@@ -18,6 +19,7 @@ const initialValues = {
 
 const Login = () => {
     const dispatch = useDispatch();
+    const isError = useSelector(selectIsAuthError);
 
     const handleSubmit=({email, password}, { resetForm }) => {
         dispatch(
@@ -45,6 +47,7 @@ const Login = () => {
                 <button type="submit">LOG IN</button>
                 </StyledForm>
         </Formik>
+        {isError && <div>{isError}</div>}
         </Container>
      </Page>
  };

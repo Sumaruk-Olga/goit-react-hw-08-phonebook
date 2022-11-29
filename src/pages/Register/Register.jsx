@@ -1,8 +1,9 @@
 import { Container } from "components/App/App.styled";
 import { Input, Label, Page, StyledForm } from "components/common/common.styled";
 import { Formik, ErrorMessage } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { register } from "redux/operations";
+import { selectIsAuthError } from "redux/selectors";
 import * as yup from 'yup';
 
 const schema = yup.object().shape({
@@ -19,6 +20,7 @@ const initialValues = {
 
 const Register = () => {
     const dispatch=useDispatch();
+    const isError = useSelector(selectIsAuthError);
     const handleSubmit=({name, email, password}, { resetForm }) => {            
             dispatch(
                 register({ name, email, password,})
@@ -50,6 +52,7 @@ const Register = () => {
                 <button type="submit">Register</button>
                 </StyledForm>            
         </Formik>
+        {isError && <div>{isError}</div>}
         </Container>
     </Page>
  };

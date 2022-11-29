@@ -29,7 +29,7 @@ export function ContactForm() {
   const handleSubmit = ({name, number}, { resetForm }) => {
       const isName = isNamePresent(name);
       if (!isName) {
-        dispatch(addContact({ name, phone:number }));
+        dispatch(addContact({ name, number }));
         resetForm();
       } else {
         alert(`${name} is already in contacts`);
