@@ -3,10 +3,12 @@ import { Suspense } from "react";
 import { StyledLink, Header, Container } from "./SharedNavigstion.styled";
 import { Loading } from "components/Loading/Loading";
 import { UserMenu } from "components/UserMenu/UserMenu";
+import { selectIsLoggedIn } from "redux/selectors";
+import { useSelector } from "react-redux";
 
-const loggedIn = true; //підставити валідні дані юзера
 
 const SharedNavigstion = () => {
+  const loggedIn = useSelector(selectIsLoggedIn);
     return (
     <>
         <Header>        

@@ -9,7 +9,7 @@ const phoneRegExp =/^[+]?3?[\s]?8?[\s]?\(?0\d{2}?\)?[\s]?\d{3}[\s|-]?\d{2}[\s|-]
 
 const schema = yup.object().shape({
   name: yup.string().required(),
-  number: yup.string().required().matches(phoneRegExp, 'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +').min(7, "too short").max(20, "too long"),
+  number: yup.string().required().matches(phoneRegExp, 'Phone number must be digits and can contain spaces, dashes, parentheses and can start with + (Example: +38 (XXX) XXX-XX-XX)').min(7, "too short").max(20, "too long"),
   });
 
 const initialValues = {

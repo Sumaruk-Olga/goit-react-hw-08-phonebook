@@ -1,5 +1,8 @@
-import { Page } from "components/common/common.styled";
-import { Field, Form, Formik, ErrorMessage } from "formik";
+import { Container } from "components/App/App.styled";
+import { Input, Label, Page, StyledForm } from "components/common/common.styled";
+import { Formik, ErrorMessage } from "formik";
+import { useDispatch } from "react-redux";
+import { register } from "redux/operations";
 import * as yup from 'yup';
 
 const schema = yup.object().shape({
@@ -15,39 +18,39 @@ const initialValues = {
 };
 
 const Register = () => {
-    
-    const handleSubmit=(values, { resetForm }) => {
-            console.log(values);
-            // відправляємо на бєк і чекаємо відповіді
-            // якщо все ок
+    const dispatch=useDispatch();
+    const handleSubmit=({name, email, password}, { resetForm }) => {            
+            dispatch(
+                register({ name, email, password,})
+              );
             resetForm();
-            // i кидаємо на сторінку контактів
     };    
     
-    return <Page>        
+    return <Page>
+        <Container>        
         <Formik
             initialValues={initialValues}
             onSubmit={handleSubmit}
             validationSchema={schema}
         > 
             
-            <Form autoComplete="off">
-                <label htmlFor="name">Name: 
-                    <Field name="name" type="text" />
+            <StyledForm autoComplete="off">
+                <Label htmlFor="name">Name: 
+                    <Input name="name" type="text" />
                     <ErrorMessage name="name" component="div" />
-                </label>
-                <label htmlFor="email">Email: 
-                    <Field name="email" type="email"  />
+                </Label>
+                <Label htmlFor="email">Email: 
+                    <Input name="email" type="email"  />
                     <ErrorMessage name="email" component="div" />
-                </label>
-                <label htmlFor="password">Password: 
-                    <Field name="password" type="password"  />
+                </Label>
+                <Label htmlFor="password">Password: 
+                    <Input name="password" type="password"  />
                     <ErrorMessage name="password" component="div" />
-                </label>
+                </Label>
                 <button type="submit">Register</button>
-                </Form>
-            
+                </StyledForm>            
         </Formik>
+        </Container>
     </Page>
  };
  export default Register;

@@ -1,9 +1,10 @@
 // import { useEffect } from "react";
 // import { TailSpin } from 'react-loader-spinner';
 // import { useDispatch, useSelector } from "react-redux";
-// import { deleteTask, fetchContacts } from "redux/operations";
+// import { deleteContact, fetchContacts } from "redux/operations";
 // import { selectContacts, selectFilter, selectError, selectLoading } from "redux/selectors";
 // import { ContactsList, ContactItem, DeleteButton, Error } from "./Contacts.styled";
+// import { Loading } from "components/Loading/Loading";
 
 export const Contacts = () => {
     // const dispatch = useDispatch();
@@ -25,14 +26,14 @@ export const Contacts = () => {
     //   }, [dispatch]);
 
     return (<><div>OUR CONTACTS</div>
-        {/* {isLoading && <TailSpin height="40" width="40" color="#9342f5" ariaLabel="tail-spin-loading" radius="1" wrapperStyle={{}} wrapperClass="" visible={true} />} 
+        {/* {isLoading && <Loading />} 
         {isError && <Error>Sorry, something went wrong... Please, try again</Error>}
         {contacts.length>0 && 
         <ContactsList>                  
             {getVisibleContacts().map((item) => {               
                 return <ContactItem key={item.id}>
                     <p>{item.name}: {item.phone}</p>
-                    <DeleteButton type="button" onClick={()=>dispatch(deleteTask(item.id))} >x</DeleteButton>
+                    <DeleteButton type="button" onClick={()=>dispatch(deleteContact(item.id))} >x</DeleteButton>
                 </ContactItem>
             })}
         </ContactsList>}    */}

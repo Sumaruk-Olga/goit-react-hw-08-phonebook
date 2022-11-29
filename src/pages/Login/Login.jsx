@@ -1,5 +1,8 @@
-import { Page } from "components/common/common.styled";
-import { Field, Form, Formik, ErrorMessage } from "formik";
+import { Container } from "components/App/App.styled";
+import { Input, Label, Page, StyledForm } from "components/common/common.styled";
+import { Formik, ErrorMessage } from "formik";
+import { useDispatch } from "react-redux";
+import { logIn } from "redux/operations";
 import * as yup from 'yup';
 
 
@@ -14,34 +17,35 @@ const initialValues = {
 };
 
 const Login = () => {
+    const dispatch = useDispatch();
 
-
-    const handleSubmit=(values, { resetForm }) => {
-        console.log(values);
-        // відправляємо на бєк і чекаємо відповіді
-        // якщо все ок
+    const handleSubmit=({email, password}, { resetForm }) => {
+        dispatch(
+            logIn({ email, password,})
+          );        
         resetForm();
-        // i кидаємо на сторінку контактів
 };
 
-    return <Page>  
+    return <Page>
+        <Container>  
         <Formik
             initialValues={initialValues}
             onSubmit={handleSubmit}
             validationSchema={schema}
         >      
-        <Form autoComplete="off">                
-                <label htmlFor="email">Email: 
-                    <Field name="email" type="email"  />
+        <StyledForm autoComplete="off">                
+                <Label htmlFor="email">Email: 
+                    <Input name="email" type="email"  />
                     <ErrorMessage name="email" component="div" />
-                </label>
-                <label htmlFor="password">Password: 
-                    <Field name="password" type="password"  />
+                </Label>
+                <Label htmlFor="password">Password: 
+                    <Input name="password" type="password"  />
                     <ErrorMessage name="password" component="div" />
-                </label>
+                </Label>
                 <button type="submit">LOG IN</button>
-                </Form>
+                </StyledForm>
         </Formik>
+        </Container>
      </Page>
  };
  export default Login;
